@@ -1,34 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <nav></nav>
 
-<div style="margin: 50px">
-    <button type="button" class="btn btn-primary pull-right" [routerLink]="['/quiz/new']">
-        <span class="glyphicon glyphicon-plus"></span>
-    </button>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Type</th>
-                <th scope="col">Level</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let quiz of webService.quizzes">
-                <td>{{ quiz. id }}</td>
-                <td>{{ quiz. type }}</td>
-                <td>{{ quiz. level }}</td>
-                <td>
-                    <button type="button" class="btn btn-primary" [routerLink]="['quiz', quiz. id, 'start']">
-                        <span class="glyphicon glyphicon-play-circle"></span>
-                    </button>
-                
-                    <button type="button" class="btn btn-danger">
-                        <span class="glyphicon glyphicon-remove-circle"></span>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+
+<router-outlet></router-outlet>

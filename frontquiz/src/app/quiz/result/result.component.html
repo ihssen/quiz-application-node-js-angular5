@@ -1,0 +1,47 @@
+
+
+<mat-card class="card-result">
+  <mat-card-header class="row card-header" >  
+      <div class="col-md-3">
+          <span>Condidats:</span>
+          <span>Ihsen Mhadhbi</span>
+        </div>  
+        <div class="col-md-3">
+          <span>Quiz:</span>
+          <span>Quizz Name</span>
+        </div>
+        <div class="col-md-3">
+            <span>Level:</span>
+            <span>xx</span>
+          </div>
+        <div class="col-md-3">
+          <span>Score:</span>
+          <span>xx/20</span>
+        </div>
+  </mat-card-header>
+
+  <mat-card-content style="margin-top: 10%">
+    <div  *ngFor="let question of questions; let i = index">
+      <h3>{{ question.text }}</h3>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let r of responses | responsesOfQuestion : question.id">
+
+            <span *ngIf=" r.is_right == '1' ;then rightResponse; else falseResponse" ></span>
+
+            <ng-template #rightResponse>
+              <span style="font-size: 20px" class="glyphicon glyphicon-ok-sign text-success" ></span>
+            </ng-template>
+
+            <ng-template #falseResponse>
+              <span style="font-size: 20px" class="glyphicon glyphicon-remove-sign text-danger" ></span>
+            </ng-template>  
+
+          <input type="checkbox" (click)="saveResponse(r)" [attr.checked]="r.is_checked == true ? 'checked' : null" disabled />{{ r.text }}
+
+          <span *ngIf="r.is_checked == true  && r.is_right == '1' " class="pull-right glyphicon glyphicon-thumbs-up"></span>
+         
+        </li>
+      </ul>
+    </div>
+  </mat-card-content>
+</mat-card>

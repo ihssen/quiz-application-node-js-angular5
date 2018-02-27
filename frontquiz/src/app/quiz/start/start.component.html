@@ -1,3 +1,19 @@
-<p>
-  start works!
-</p>
+
+
+<mat-horizontal-stepper [linear]="isLinear">
+    
+  <mat-step [completed]="false"  *ngFor="let question of questions; let i = index" label="Question {{ i+1 }}">
+    <h3>{{ question.text }}</h3>
+    <ul>
+      <li *ngFor="let r of responses">
+        <input type="checkbox" (click)="saveResponse(r)" [attr.checked]="r.is_checked == true ? 'checked' : null">{{ r.text }}
+      </li>
+    </ul>
+    <div>
+      <button mat-button matStepperPrevious (click)="getResponsesForQuestion(idQuestion,(question.id)-1)" *ngIf="i !== 0">Previous</button>
+      <button mat-button matStepperNext (click)="getResponsesForQuestion(idQuestion,(question.id)+1)" *ngIf="i !== questions.length-1">Next</button>
+      <button type="button" class="btn btn-success" [routerLink]="['/quiz/'+idQuiz+'/result']" *ngIf="i == questions.length-1">Result</button>
+    </div>
+  </mat-step>
+
+</mat-horizontal-stepper>

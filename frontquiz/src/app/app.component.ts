@@ -17,7 +17,7 @@ export class AppComponent {
     constructor(private webService: WebService) {}
 
     ngOnInit(){
-        this.webService.getQuizes();
+
         
     }    
 }
