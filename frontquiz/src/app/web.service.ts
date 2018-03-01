@@ -22,17 +22,54 @@ export class WebService {
       });
     }
 
+    getQuiz(idQuiz){
+        return this.http.get(this.BASE_URL + '/quizzes/'+idQuiz);
+    }
+
+    deleteQuiz(idQuiz){
+        return this.http.delete(this.BASE_URL + '/quizzes/'+idQuiz);
+    }
+
     postQuizz(quiz){
-        console.log(quiz);
         return this.http.post(this.BASE_URL + '/quizzes', quiz)
+    }
+
+    updateQuizz(quiz){
+        return this.http.put(this.BASE_URL + '/quizzes/'+quiz.id, quiz)
     }
 
     getQuestions(idQuiz) {
         return this.http.get(this.BASE_URL + '/quizzes/' + idQuiz + '/questions');
     }
+    getQuestion(idQuestion) {
+        return this.http.get(this.BASE_URL + '/questions/' + idQuestion);
+    }
 
+    addQuestion(question){
+        return this.http.post(this.BASE_URL + '/questions', question)
+    }
+
+    deleteQuestion(idQuestion){
+        return this.http.delete(this.BASE_URL + '/questions/'+idQuestion);
+    }
+
+    updateQuestion(question){
+        return this.http.put(this.BASE_URL + '/questions/'+question.id, question);
+    }
+
+    addResponse(response){
+        return this.http.post(this.BASE_URL + '/responses', response)
+    }
+    
+    getResponse(responseId) {
+        return this.http.get(this.BASE_URL + '/responses/'+responseId);
+    }
+    deleteResponse(responseId) {
+        return this.http.delete(this.BASE_URL + '/responses/'+responseId);
+    }
 
     getResponsesForQuestion(idQuiz, idQuestion) {
+        console.log(idQuiz, idQuestion)
         return this.http.get(this.BASE_URL + '/quizzes/'+idQuiz+'/questions/'+idQuestion);
     }
 
@@ -44,12 +81,8 @@ export class WebService {
         return this.http.put(this.BASE_URL + '/responses/'+response.id, response);
     }
 
-    deleteQuiz(idQuiz){
-        return this.http.delete(this.BASE_URL + '/quizzes/'+idQuiz);
-    }
-
     getResponsesForQuizz(idQuiz) {
-        return this.http.get(this.BASE_URL + '/responses/'+idQuiz);
+        return this.http.get(this.BASE_URL + '/responses/quiz/'+idQuiz);
     }
 
 }

@@ -14,7 +14,6 @@ export class ResultComponent implements OnInit {
 
   questions;
   responses;
-  idQuestion;
   idQuiz;
 
   constructor(private route: ActivatedRoute , private webService:  WebService, private http :HttpClient) { }

@@ -1,37 +1,37 @@
 <div style="margin: 50px">
-  <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
+  <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal" tooltip="add quiz">
       <span class="glyphicon glyphicon-plus"></span>
   </button>
   <table class="table table-striped" style="margin-right: 10%">
-      <thead>
           <tr>
               <th scope="col">Id</th>
               <th scope="col">Type</th>
               <th scope="col">Level</th>
               <th scope="col">Actions</th>
           </tr>
-      </thead>
-      <tbody>
+
           <tr *ngFor="let quiz of webService.quizzes">
               <td>{{ quiz. id }}</td>
               <td>{{ quiz. type }}</td>
               <td>{{ quiz. level }}</td>
               <td>
-                <button type="button" class="btn btn-success" [routerLink]="['quiz', quiz.id, 'start']">
+                <button type="button" class="btn btn-success" [routerLink]="['quiz', quiz.id, 'start']" tooltip="start quiz">
                     <span class="glyphicon glyphicon-play-circle"></span>
                 </button>
                 
-                <button type="button" class="btn btn-primary" (click)="detailsQuiz(quiz.id)">
+                <button type="button" class="btn btn-primary" (click)="getQuiz(quiz.id)" data-toggle="modal" data-target="#myModal" tooltip="edit quiz">
                     <span class="glyphicon glyphicon-edit"></span>
                 </button>
-
-                <button type="button" class="btn btn-danger" (click)="deleteQuiz(quiz.id)">
+                <br>
+                <button type="button" class="btn btn-danger" (click)="deleteQuiz(quiz.id)" tooltip="delete quiz" placement="bottom">
                     <span class="glyphicon glyphicon-remove-circle"></span>
                 </button>
-
+                
+                <button type="button" class="btn btn-info"  [routerLink]="['quiz', quiz.id, 'manage']" tooltip="manage quiz" placement="bottom">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </button>
               </td>
           </tr>
-      </tbody>
   </table>
 </div>
 
@@ -66,6 +66,6 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
         </div>
-    
     </div>
 </div>
+

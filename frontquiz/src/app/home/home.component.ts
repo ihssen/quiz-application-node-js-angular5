@@ -18,6 +18,7 @@ export class HomeComponent {
     constructor(private webService: WebService, private toastr: ToastrService) {}
 
     quiz = {
+      id: "",
       type: "",
       level: ""
     }
@@ -50,10 +51,33 @@ export class HomeComponent {
 
     
       post() {
-         this.webService.postQuizz(this.quiz).subscribe(responses => {
-          this.webService.getQuizes();
-          }, error => {
-          console.log('Unable to get questions');
-        });
+        if(this.quiz.id){
+          console.log("appel update"); //// faire appel a la mise ajour de quiz
+          this.webService.updateQuizz(this.quiz).subscribe(response => {
+            this.webService.getQuizes();
+            this.quiz = { id: "",level: "",type: ""};
+            this.toastr.success('Quiz has been updated.');
+            }, error => {
+            console.log('Unable to put quizz');
+          });
+        }else {
+          this.webService.postQuizz(this.quiz).subscribe(responses => {
+            this.webService.getQuizes();
+            this.quiz.id = '';
+            this.quiz.level = '';
+            this.quiz.type = '';
+            }, error => {
+            console.log('Unable to post quiz');
+          });
+        }
+        
       }
+
+      getQuiz(idQuiz) {
+        this.webService.getQuiz(idQuiz).subscribe(response => {
+            this.quiz = response[0];
+          }, error => {
+            console.log('Unable to get questions');
+          });
+        }
 }

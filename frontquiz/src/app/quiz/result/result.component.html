@@ -36,7 +36,7 @@
               <span style="font-size: 20px" class="glyphicon glyphicon-remove-sign text-danger" ></span>
             </ng-template>  
 
-          <input type="checkbox" (click)="saveResponse(r)" [attr.checked]="r.is_checked == true ? 'checked' : null" disabled />{{ r.text }}
+          <input type="checkbox"  [attr.checked]="r.is_checked == true ? 'checked' : null" disabled />{{ r.text }}
 
           <span *ngIf="r.is_checked == true  && r.is_right == '1' " class="pull-right glyphicon glyphicon-thumbs-up"></span>
          

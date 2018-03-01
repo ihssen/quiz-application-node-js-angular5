@@ -95,7 +95,13 @@ api.get('/quizzes', (req, res) => {
     res.json(quizzes);
 })
 
-//// post quiz 
+/// get one quizze
+api.get('/quizzes/:id', (req, res) => {
+    const result = quizzes.filter(quiz => quiz.id == req.params.id );
+    res.json(result);
+})
+
+//// post quiz /////
 api.post('/quizzes', (req, res) => {
     let quiz = {
         id: quizzes.length + 1,
@@ -106,6 +112,27 @@ api.post('/quizzes', (req, res) => {
     quizzes.push(quiz);
 
     res.json(quiz);
+})
+
+//// update quiz ////
+api.put('/quizzes/:id', (req, res) => {
+
+    const requestId = req.params.id;
+
+    let quiz = quizzes.filter(quiz => {
+        return quiz.id == requestId;
+    })[0];
+    
+    const index = quizzes.indexOf(quiz);
+    const keys = Object.keys(req.body);
+
+    keys.forEach(key => {
+        quiz[key] = req.body[key];
+    });
+
+    quizzes[index] = quiz;
+    console.log(quizzes[index])    ;
+    res.json(quizzes[index]);
 })
 
 ///// delete quizz 
@@ -130,6 +157,103 @@ api.get('/quizzes/:id/questions', (req, res) => {
     const result = questions.filter(question => question.id_quizz == req.params.id);
     res.json(result);
 })
+
+//// get  question ///
+api.get('/questions/:id', (req, res) => { 
+    const result = questions.filter(question => question.id == req.params.id );
+    res.json(result);
+})
+
+//// post question /////
+api.post('/questions', (req, res) => {
+    let question = {
+        id: questions.length + 1,
+        id_quizz: req.body.id_quizz,
+        text: req.body.text
+      };
+    
+    questions.push(question);
+
+    res.json(question);
+})
+
+//// update question ////
+api.put('/questions/:id', (req, res) => {
+
+    const requestId = req.params.id;
+
+    let question = questions.filter(question => {
+        return question.id == requestId;
+    })[0];
+    
+    const index = questions.indexOf(question);
+    const keys = Object.keys(req.body);
+
+    keys.forEach(key => {
+        question[key] = req.body[key];
+    });
+
+    questions[index] = question;
+    console.log(questions[index])    ;
+    res.json(questions[index]);
+})
+
+///// delete question 
+api.delete('/questions/:id', (request, response) => {
+  
+    let questionId = request.params.id;
+  
+    let question = questions.filter(question => {
+      return question.id == questionId;
+    })[0];
+  
+    const index = questions.indexOf(question);
+  
+    questions.splice(index, 1);
+  
+    response.json({ message: `Question ${questionId} deleted.`});
+  
+  });
+
+
+
+////post response ///////////
+api.post('/responses', (req, res) => {
+    let response = {
+        id: responses.length + 1,
+        id_quizz:    req.body.id_quizz,
+        id_question: req.body.id_question,
+        text:        req.body.text,
+        is_right:    req.body.is_right
+      };
+    
+    responses.push(response);
+
+    res.json(response);
+})
+
+/// get response
+api.get('/responses/:id', (req, res) => { 
+    const result = responses.filter(response => response.id == req.params.id );
+    res.json(result);
+})
+
+///// delete response 
+api.delete('/responses/:id', (request, res) => {
+  
+    let responseId = request.params.id;
+  
+    let response = responses.filter(response => {
+      return response.id == responseId;
+    })[0];
+  
+    const index = responses.indexOf(response);
+  
+    responses.splice(index, 1);
+  
+    res.json({ message: `Question ${responseId} deleted.`});
+  
+  });
 
 /// get responses for a question
 api.get('/quizzes/:id_quiz/questions/:id_question', (req, res) => { 
@@ -167,8 +291,8 @@ api.put('/responses/:idResponse', (req, res) => {
 })
 
  
-//// get  response for quiz ///
-api.get('/responses/:idQuiz', (req, res) => { 
+//// get  responses for quiz ///
+api.get('/responses/quiz/:idQuiz', (req, res) => { 
     const result = responses.filter(response => response.id_quizz == req.params.idQuiz );
     res.json(result);
 })

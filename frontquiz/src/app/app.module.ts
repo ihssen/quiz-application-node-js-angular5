@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -10,8 +10,11 @@ import { MatStepperModule} from '@angular/material/stepper';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule, MatRadioModule } from '@angular/material';
 import { ToastrModule } from 'ngx-toastr';
-import {ModalModule} from 'ngx-modal';
 import swal from 'sweetalert2';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { DragulaModule } from 'ng2-dragula';
+import { DragDropDirectiveModule} from "angular4-drag-drop";
 
 
 
@@ -25,6 +28,7 @@ import { HomeComponent } from './home/home.component';
 import { ResultComponent } from './quiz/result/result.component';
 import { ResponsesOfQuestionPipe } from './pipe/responses-of-question.pipe';
 import { NewComponent } from './quiz/new/new.component';
+import { ManageComponent } from './quiz/manage/manage.component';
 
 var routes = [
 
@@ -47,14 +51,17 @@ var routes = [
   {
     path: 'quiz/new',
     component: NewComponent,
-    // pathMatch: 'full'
+  },
+  {
+    path: 'quiz/:id/manage',
+    component: ManageComponent,
   }
 ];
 
 
 @NgModule({
   declarations: [
-    AppComponent, NavComponentComponent, StartComponent, HomeComponent, ResultComponent, ResponsesOfQuestionPipe, NewComponent
+    AppComponent, NavComponentComponent, StartComponent, HomeComponent, ResultComponent, ResponsesOfQuestionPipe, NewComponent, ManageComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,
@@ -63,7 +70,10 @@ var routes = [
     MatToolbarModule, MatButtonModule, MatStepperModule, MatCardModule,
     FormsModule, ReactiveFormsModule,
     MatFormFieldModule, MatInputModule, MatCheckboxModule, MatRadioModule,
-    ToastrModule.forRoot(), ModalModule
+    ToastrModule.forRoot(), ModalModule.forRoot(),
+    TooltipModule.forRoot(),
+    DragulaModule, DragDropDirectiveModule
+
   ],
   providers: [ WebService ],
   bootstrap: [ AppComponent ]

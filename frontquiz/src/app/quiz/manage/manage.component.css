@@ -1,0 +1,16 @@
+.cursor-pointer :hover{
+    cursor: pointer;
+    background-color: deepskyblue;
+}
+.cursor-hand{
+    cursor: move;
+}
+.margin-move{
+    margin-right: 10px;
+}
+
+#btn-add-q{
+    
+    margin-right: 2%;
+    margin-top: 1%;
+}
