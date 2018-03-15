@@ -1,5 +1,5 @@
 <div class="row">
-    <button id="btn-add-q" type="button" class="btn btn-primary pull-right" (click)="openModalQuestion(templateQuestion, question.id)" tooltip="Add new question" placement="bottom">
+    <button id="btn-add-q" type="button" class="btn btn-primary pull-right" (click)="openModalQuestion(templateQuestion, question._id)" tooltip="Add new question" placement="bottom">
         Add new question
     </button>
 </div>
@@ -15,15 +15,15 @@
     <div class="row">
       <div class="col-md-6" style="padding-left: 2%">
          <h3 >{{ question.text }}</h3>
-          <button type="button"  class="btn btn-primary"  tooltip="Add answer" placement="bottom" (click)="openModalAdd(template, question.id)">
+          <button type="button"  class="btn btn-primary"  tooltip="Add answer" placement="bottom" (click)="openModalAdd(template, question._id)">
               <span class="glyphicon glyphicon-plus-sign"></span>
           </button>
 
-          <button type="button" class="btn btn-info" (click)="openModalQuestion(templateQuestion, question.id)" tooltip="Edit question" placement="bottom">
+          <button type="button" class="btn btn-info" (click)="openModalQuestion(templateQuestion, question._id)" tooltip="Edit question" placement="bottom">
               <span class="glyphicon glyphicon-edit"></span>
           </button>
 
-          <button type="button" (click)="deleteQuestion(question.id)" class="btn btn-danger" tooltip="delete the question with his answers" placement="bottom">
+          <button type="button" (click)="deleteQuestion(question._id)" class="btn btn-danger" tooltip="delete the question with his answers" placement="bottom">
               <span class="glyphicon glyphicon-remove-circle"></span>
           </button >
 
@@ -33,13 +33,13 @@
       </div>
      
       <ul class="list-group col-md-6 " style="padding: 1% 3% 0 0 ">
-        <li class="cursor-pointer list-group-item row " *ngFor="let r of responses | responsesOfQuestion : question.id" >
-          <div class="col-md-11 " (click)="openModalUpdate(template, r.id)" tooltip="click to edit">
+        <li class="cursor-pointer list-group-item row " *ngFor="let r of responses | responsesOfQuestion : question._id" >
+          <div class="col-md-11 " (click)="openModalUpdate(template, r._id)" tooltip="click to edit">
             <input type="checkbox" [attr.checked]="r.is_right == true ? 'checked' : null" disabled />
             <span>{{r.text}}</span>
           </div>
           <div class="col-md-1" tooltip="delete this response" placement="bottom">
-            <span class=" glyphicon glyphicon-remove-circle pull-right" (click)="deleteResponse(r.id)"></span>
+            <span class=" glyphicon glyphicon-remove-circle pull-right" (click)="deleteResponse(r._id)"></span>
           </div>
         </li>
       </ul>

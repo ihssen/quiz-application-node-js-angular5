@@ -1,6 +1,6 @@
 
-
-<mat-horizontal-stepper [linear]="isLinear">
+<div class="stepper">
+  <mat-horizontal-stepper [linear]="isLinear" (selectionChange)="clickInStep($event)">
     
   <mat-step [completed]="false"  *ngFor="let question of questions; let i = index" label="Question {{ i+1 }}">
     <h3>{{ question.text }}</h3>
@@ -10,10 +10,12 @@
       </li>
     </ul>
     <div>
-      <button mat-button matStepperPrevious (click)="getResponsesForQuestion(idQuestion,(question.id)-1)" *ngIf="i !== 0">Previous</button>
-      <button mat-button matStepperNext (click)="getResponsesForQuestion(idQuestion,(question.id)+1)" *ngIf="i !== questions.length-1">Next</button>
+      <button mat-button matStepperPrevious (click)="getResponsesForQuestion(idQuiz, questions[i-1]._id)" *ngIf="i !== 0">Previous</button>
+      <button mat-button matStepperNext (click)="getResponsesForQuestion(idQuiz,questions[i+1]._id)" *ngIf="i !== questions.length-1">Next</button>
       <button type="button" class="btn btn-success" [routerLink]="['/quiz/'+idQuiz+'/result']" *ngIf="i == questions.length-1">Result</button>
     </div>
   </mat-step>
 
-</mat-horizontal-stepper>
+  </mat-horizontal-stepper>
+
+</div>

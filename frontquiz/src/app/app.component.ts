@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { WebService } from './web.service';
+import { ApiService } from './shared/service/api.service';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -14,7 +14,7 @@ export class AppComponent {
 
     
 
-    constructor(private webService: WebService) {}
+    constructor(private ApiService: ApiService) {}
 
     ngOnInit(){
 

@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { WebService } from '../../web.service';
+import { ApiService } from '../../shared/service/api.service'; 
+
 import 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-
- 
 
 
 
@@ -20,13 +18,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class StartComponent implements OnInit {
 
-  BASE_URL = 'http://localhost:3000/api';  
   questions;
   responses;
   idQuestion;
   idQuiz;
 
-  constructor(private route: ActivatedRoute, private _formBuilder: FormBuilder, private webService:  WebService, private http :HttpClient) {
+  constructor(private route: ActivatedRoute, private _formBuilder: FormBuilder, private ApiService:  ApiService, private http :HttpClient) {
     let q: any;
     var idQuestion;
     
@@ -34,11 +31,13 @@ export class StartComponent implements OnInit {
 
   ngOnInit() {
     this.idQuiz = this.route.snapshot.params.id;
-    this.webService.getQuestions(this.idQuiz).subscribe(questions => {
+    this.ApiService.get(`questions/quiz/${this.idQuiz}`).subscribe(questions => {
       this.questions = questions;
       if(this.questions.length > 0) {
-          this.idQuestion = this.questions.reduce((a, b) => a.id < b.id ? a : b).id;
-          console.log(this.idQuiz, this.idQuestion);
+          // this.idQuestion = this.questions.reduce((a, b) => a._$id < b._id ? a : b)._id;
+          this.idQuestion = this.questions[0]._id;  
+          // console.log(this.idQuestion);        
+          // console.log(this.idQuiz, this.idQuestion);
         this.getResponsesForQuestion(this.idQuiz, this.idQuestion);
         }
       }, error => {
@@ -47,20 +46,24 @@ export class StartComponent implements OnInit {
   }
 
   getResponsesForQuestion(idQuiz,idQuestion){
-    this.webService.getResponsesForQuestion(idQuiz, idQuestion).subscribe(responses => {
+    console.log(idQuiz);
+    this.ApiService.get(`answers/question/${idQuestion}/quiz/${idQuiz}`).subscribe(responses => {
       this.responses = responses;
       }, error => {
       console.log('Unable to get questions');
     });
   }
 
+  clickInStep(event){
+    this.getResponsesForQuestion(this.idQuiz, this.questions[event.selectedIndex]._id)
+  }
   saveResponse(response){
     if(response.is_checked == false )
       response.is_checked = true;
     else
       response.is_checked = false;
     
-    this.webService.saveResponseChecked(response).subscribe(res => {
+    this.ApiService.put(`answers/${response.id}`, response).subscribe(res => {
         console.log(res);
       });
   }

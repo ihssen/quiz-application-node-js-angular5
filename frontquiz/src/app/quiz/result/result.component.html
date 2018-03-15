@@ -3,7 +3,7 @@
 <mat-card class="card-result">
   <mat-card-header class="row card-header" >  
       <div class="col-md-3">
-          <span>Condidats:</span>
+          <span>Condidat:</span>
           <span>Ihsen Mhadhbi</span>
         </div>  
         <div class="col-md-3">
@@ -24,7 +24,7 @@
     <div  *ngFor="let question of questions; let i = index">
       <h3>{{ question.text }}</h3>
       <ul class="list-group">
-        <li class="list-group-item" *ngFor="let r of responses | responsesOfQuestion : question.id">
+        <li class="list-group-item" *ngFor="let r of responses | responsesOfQuestion : question._id">
 
             <span *ngIf=" r.is_right == '1' ;then rightResponse; else falseResponse" ></span>
 

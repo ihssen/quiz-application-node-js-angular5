@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WebService } from '../../web.service';
+import { ApiService } from '../../shared/service/api.service'; 
 
 
 @Component({
@@ -25,7 +25,7 @@ import { WebService } from '../../web.service';
 })
 export class NewComponent implements OnInit {
 
-  constructor(private webService: WebService) { }
+  constructor(private ApiService: ApiService) { }
 
   ngOnInit() {
   }

@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
-import { WebService } from '../../web.service';
+import { ApiService } from '../../shared/service/api.service'; 
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import swal from 'sweetalert2';
@@ -23,7 +23,7 @@ export class ManageComponent implements OnInit {
   idQuiz;
 
   response = {
-    id: '',
+    _id: '',
     id_quizz: "",
     id_question: "",
     text: "",
@@ -31,13 +31,13 @@ export class ManageComponent implements OnInit {
   }
 
   question = {
-    id: "",
+    _id: "",
     id_quizz: "",
     text: "",
   }
 
   modalRef: BsModalRef;
-  constructor(private route: ActivatedRoute , private webService:  WebService, private http :HttpClient, private toastr: ToastrService, private modalService: BsModalService) { }
+  constructor(private route: ActivatedRoute , private ApiService:  ApiService, private http :HttpClient, private toastr: ToastrService, private modalService: BsModalService) { }
 
   ngOnInit() {
     this.idQuiz = this.route.snapshot.params.id;
@@ -45,7 +45,7 @@ export class ManageComponent implements OnInit {
   }
 
   getQuestions(idQuiz){
-    this.webService.getQuestions(idQuiz).subscribe(questions => {
+    this.ApiService.get(`questions/quiz/${idQuiz}`).subscribe(questions => {
       this.questions = questions;
       }, error => {
       console.log('Unable to get questions');
@@ -63,7 +63,7 @@ export class ManageComponent implements OnInit {
   }
 
   getResponsesForQuiz(idQuiz){
-    this.webService.getResponsesForQuizz(idQuiz).subscribe(res => {
+    this.ApiService.get(`/answers/quiz/${this.idQuiz}`).subscribe(res => {
       this.responses = res;
       }, error => {
       console.log('Unable to get questions');
@@ -71,8 +71,8 @@ export class ManageComponent implements OnInit {
   }
 
   getResponse(responseId){
-    this.webService.getResponse(responseId).subscribe(res => {
-      this.response = res[0];
+    this.ApiService.get(`answers/${responseId}`).subscribe(res => {
+      this.response = res;
       }, error => {
       console.log('Unable to get response');
     });
@@ -89,8 +89,8 @@ export class ManageComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        this.webService.deleteQuestion(questionId).subscribe(res => {
-          this.questions = this.questions.filter((question) => question.id !== questionId);
+        this.ApiService.delete(`questions/${questionId}`).subscribe(res => {
+          this.questions = this.questions.filter((question) => question._id !== questionId);
           this.toastr.success('Quiz has been deleted.');
         });
       }
@@ -101,19 +101,19 @@ export class ManageComponent implements OnInit {
   addResponse() {
     this.response.id_quizz = this.idQuiz;
     
-    if(this.response.id){
-      this.webService.saveResponseChecked(this.response).subscribe(res => {
+    if(this.response._id){
+      this.ApiService.put(`answers/${this.response._id}`, this.response).subscribe(res => {
         this.getResponsesForQuiz(this.idQuiz);
-    })
+      })
     }
     else{
-      this.webService.addResponse(this.response).subscribe(res => {
+      this.ApiService.post('answers',this.response).subscribe(res => {
         this.getResponsesForQuiz(this.idQuiz);
         }, error => {
           this.toastr.error('Unable to post quiz.');
       });
     }
-    this.response.id = ''
+    this.response._id = ''
     this.response.id_quizz = '',
     this.response.id_question = '',
     this.response.text = '';
@@ -122,46 +122,42 @@ export class ManageComponent implements OnInit {
     }
 
   deleteResponse(idResponse){
-    this.webService.deleteResponse(idResponse).subscribe(res => {
-      this.responses = this.responses.filter((response) => response.id !== idResponse);
+    this.ApiService.delete(`answers/${idResponse}`).subscribe(res => {
+      this.responses = this.responses.filter((response) => response._id !== idResponse);
       this.toastr.success('Quiz has been deleted.');
     });
   }
 
   openModalQuestion(template: TemplateRef<any>, idQuestion) {
-   
-    this.question.id =  idQuestion;
-    this.getQuestion(idQuestion);
+    this.question._id =  idQuestion;
+    if(idQuestion) this.getQuestion(idQuestion);
     this.modalRef = this.modalService.show(template);
   }
 
   getQuestion(questionId){
-    this.webService.getQuestion(questionId).subscribe(res => {
-      this.question = res[0];
-      console.log(res[0]);
+    this.ApiService.get(`questions/${questionId}`).subscribe(res => {
+      this.question = res;
       }, error => {
       console.log('Unable to get question');
     });
   }
 
   postQuestion() {
-    console.log(this.question.id)
-    
-    if(this.question.id !== ''){
-      console.log("azerty",this.question.id)
-      this.webService.updateQuestion(this.question).subscribe(res => {
+
+    if(this.question._id !== ''){
+      this.ApiService.put(`questions/${this.question._id}`,this.question).subscribe(res => {
         this.getQuestions(this.idQuiz);
       })
     }
     else{
       this.question.id_quizz = this.idQuiz,
-      this.webService.addQuestion(this.question).subscribe(res => {
+      this.ApiService.post('questions',this.question).subscribe(res => {
         this.getQuestions(this.idQuiz);
         }, error => {
           this.toastr.error('Unable to post quiz.');
       });
     }
-    this.question.id = ''
+    this.question._id = ''
     this.question.id_quizz = '',
     this.question.text = '';
     this.modalRef.hide();

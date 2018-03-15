@@ -1,0 +1,22 @@
+:host /deep/ ng2-smart-table thead > tr > th  { 
+    /* background-color:blue;   */
+    font-size: 20px
+}
+
+:host /deep/ ng2-smart-table tbody > tr > td  { 
+    font-size: 20px
+}
+
+.ng2-st-actions {
+    font-size: 20px !important;
+}
+:host /deep/ ng2-smart-table tr[ng2-st-thead-form-row] {
+    font-size: 20px !important;
+}
+
+:host /deep/ ng2-smart-table table  {
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
+    padding-right: 3%;
+}

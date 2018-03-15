@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WebService } from '../../web.service';
+import { ApiService } from '../../shared/service/api.service'; 
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -16,11 +16,11 @@ export class ResultComponent implements OnInit {
   responses;
   idQuiz;
 
-  constructor(private route: ActivatedRoute , private webService:  WebService, private http :HttpClient) { }
+  constructor(private route: ActivatedRoute , private ApiService:  ApiService, private http :HttpClient) { }
 
   ngOnInit() {
     this.idQuiz = this.route.snapshot.params.id;
-    this.webService.getQuestions(this.idQuiz).subscribe(questions => {
+    this.ApiService.get(`questions/quiz/${this.idQuiz}`).subscribe(questions => {
       this.questions = questions;
       }, error => {
       console.log('Unable to get questions');
@@ -29,7 +29,8 @@ export class ResultComponent implements OnInit {
   }
 
   getResponsesForQuiz(idQuiz){
-    this.webService.getResponsesForQuizz(idQuiz).subscribe(responses => {
+    this.ApiService.get(`answers/quiz/${idQuiz}`).subscribe(responses => {
+      console.log(responses);
       this.responses = responses;
       }, error => {
       console.log('Unable to get questions');

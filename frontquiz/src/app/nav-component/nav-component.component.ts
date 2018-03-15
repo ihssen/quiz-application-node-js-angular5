@@ -1,19 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../shared/service/auth.service';
+
+
 
 @Component({
   selector: 'nav',
   template: `
-    <mat-toolbar color="primary">
-      <button mat-button routerLink="/">Login</button>
+    <mat-toolbar color="primary" *ngIf="auth.isLoggedIn()">
+      <button mat-button routerLink="/login" (click)="logout()">Logout</button>
       <button mat-button routerLink="/">Contact</button>
     </mat-toolbar>
       `
 })
 export class NavComponentComponent implements OnInit {
 
-  constructor() { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit() {
+  }
+
+  logout(){
+    this.auth.logout();
   }
 
 }
