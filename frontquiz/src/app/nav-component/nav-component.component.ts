@@ -8,7 +8,7 @@ import { AuthService } from '../shared/service/auth.service';
   template: `
     <mat-toolbar color="primary" *ngIf="auth.isLoggedIn()">
       <button mat-button routerLink="/login" (click)="logout()">Logout</button>
-      <button mat-button routerLink="/">Contact</button>
+      <button mat-button routerLink="/home">Home</button>
     </mat-toolbar>
       `
 })

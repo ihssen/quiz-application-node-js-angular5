@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (this.auth.isLoggedIn()) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
     }
   }
 
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     this.api.post('authenticate', payload)
       .subscribe(data => {
         this.auth.setToken(data.token);
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       });
   }
 }

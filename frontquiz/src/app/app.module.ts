@@ -37,9 +37,14 @@ import { ManageComponent } from './quiz/manage/manage.component';
 import { LoginComponent } from './login/login.component';
 
 var routes = [
-
+  
   {
     path: '',
+    component: LoginComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'home',
     component: HomeComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard]
@@ -48,7 +53,6 @@ var routes = [
       path: 'login',
       component: LoginComponent,
       pathMatch: 'full',
-
   },
   {
       path: 'quiz/:id/start',

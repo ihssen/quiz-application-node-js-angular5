@@ -62,8 +62,8 @@ export class StartComponent implements OnInit {
       response.is_checked = true;
     else
       response.is_checked = false;
-    
-    this.ApiService.put(`answers/${response.id}`, response).subscribe(res => {
+
+    this.ApiService.put(`answers/${response._id}`, response).subscribe(res => {
         console.log(res);
       });
   }

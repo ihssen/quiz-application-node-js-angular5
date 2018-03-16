@@ -73,12 +73,14 @@ function apiRouter(database) {
     //// update quizz /////////////
     router.put('/quizzes/:id', (req, res) => {
 
-        const quizzesCollection = database.collection('quizzes').findOneAndUpdate({_id: req.params.id}, {$set: req.body }, {new: true}, function(err, quizz) {
+        const quizzesCollection = database.collection('quizzes');
+
+        quizzesCollection.findOneAndUpdate({_id: ObjectID(req.params.id)}, {$set: req.body }, {upsert: true}, function(err, quizz) {
             if (err){
                 return res.send({status: false, result: err});
             }
 
-            res.json({status: true, data: quizz,  result: "User successffuly updated"});
+            res.json({status: true, data: quizz,  result: "quiz successffuly updated"});
         });
     });
 
@@ -135,7 +137,8 @@ function apiRouter(database) {
     // //// update question ////
     router.put('/questions/:id', (req, res) => {
         
-        const questionsCollection = database.collection('questions').findOneAndUpdate({_id: req.params.id}, req.body, {new: true}, function(err, question) {
+        delete req.body._id;
+        const questionsCollection = database.collection('questions').findOneAndUpdate({_id: ObjectID(req.params.id)}, {$set: req.body }, {upsert: true}, function(err, question) {
             if (err){
                 return res.send({status: false, result: err});
             }
@@ -189,7 +192,6 @@ function apiRouter(database) {
 
     // ///// delete answer 
     router.delete('/answers/:id', (req, res) => {
-        let quiz = { _id: req.params.id };
         const answersCollection = database.collection('answers');
 
         answersCollection.remove({_id: ObjectID(req.params.id)}, {safe: true}, function(err, result) {
@@ -211,8 +213,8 @@ function apiRouter(database) {
 
     /////// put answer ////
     router.put('/answers/:id', (req, res) => {
-        
-        const answersCollection = database.collection('answers').findOneAndUpdate({_id: req.params.id}, req.body, {new: true}, function(err, answer) {
+        delete req.body._id;
+        const answersCollection = database.collection('answers').findOneAndUpdate({_id: ObjectID(req.params.id)}, {$set: req.body }, {upsert: true}, function(err, answer) {
             if (err){
                 return res.send({status: false, result: err});
             }

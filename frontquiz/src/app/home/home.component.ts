@@ -198,11 +198,9 @@ export class HomeComponent {
     }
 
     onEditConfirm(event) {
-      console.log(event);
-      var quiz = {id: event.newData.id , "type": event.newData.type, "level": event.newData.level};
-      this.ApiService.put(`quizzes/${event.data._id}`,quiz).subscribe(responses => {});
+      var quiz = { "type": event.newData.type, "level": event.newData.level};
+      this.ApiService.put(`quizzes/${event.data._id}`, quiz).subscribe(responses => { console.log(responses); });
       if (window.confirm('Are you sure you want to create?')) {
-        event.newData['name'] += ' + added in code';
         event.confirm.resolve(event.newData);
       } else {
         event.confirm.reject();
@@ -210,7 +208,6 @@ export class HomeComponent {
     }
 
     customAction(event) {
-      console.log(event);
       if(event.action == 'manage')
         this.route.navigateByUrl(`/quiz/${event.data._id}/manage`);
       
