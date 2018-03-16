@@ -4,7 +4,7 @@ import { AuthService } from '../shared/service/auth.service';
 
 
 @Component({
-  selector: 'nav',
+  selector: 'nav-top',
   template: `
     <mat-toolbar color="primary" *ngIf="auth.isLoggedIn()">
       <button mat-button routerLink="/login" (click)="logout()">Logout</button>
