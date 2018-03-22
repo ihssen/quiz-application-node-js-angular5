@@ -1,0 +1,23 @@
+.logo {
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+li a {
+    background-color: #eee;
+}
+li a:hover {
+    background-color: #333399;
+    color: #fff !important;
+}
+
+li a {
+    color: #673ab7;
+    font-size: 20px;
+    display: -webkit-box;
+}
+
+li a p {
+    margin-left: 10%;
+}
+

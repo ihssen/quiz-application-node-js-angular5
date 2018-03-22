@@ -263,6 +263,28 @@ function apiRouter(database) {
 
     })
 
+    ///// post user ////////////
+    router.post('/users', (req, res) => {
+        let user = {
+            first_name: req.body.first_name,
+            last_name:  req.body.last_name,
+            gender:  req.body.gender,
+            email:    req.body.email,
+            password: bcrypt.hashSync(req.body.password, 10),
+            admin: req.body.admin
+            };
+        const usersCollection = database.collection('users');
+        usersCollection.insertOne(user, (err, r) => {
+            if (err) {
+                return res.status(500).json({ error: 'Error inserting new record.' })
+            }
+        
+            const newRecord = r.ops[0];
+        
+            return res.status(201).json(newRecord);
+        });
+    });
+
 
 
     return router;

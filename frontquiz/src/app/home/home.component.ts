@@ -58,7 +58,7 @@ export class HomeComponent {
         //   editable: false
         // },
         type: {
-          title: 'Type',
+          title: 'Technologie',
           filter: false,
           sort: true
         },

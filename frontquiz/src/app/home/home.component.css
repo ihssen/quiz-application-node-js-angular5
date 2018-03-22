@@ -14,9 +14,9 @@
     font-size: 20px !important;
 }
 
-:host /deep/ ng2-smart-table table  {
+/* :host /deep/ ng2-smart-table table  {
     margin-left: 2%;
     margin-right: 2%;
     margin-top: 2%;
     padding-right: 3%;
-}
+} */

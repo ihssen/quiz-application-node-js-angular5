@@ -16,6 +16,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { DragulaModule } from 'ng2-dragula';
 import { DragDropDirectiveModule} from "angular4-drag-drop";
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
+import { SidebarModule } from './sidebar/sidebar.module';
+
 
 
 
@@ -35,6 +39,8 @@ import { ResponsesOfQuestionPipe } from './pipe/responses-of-question.pipe';
 import { NewComponent } from './quiz/new/new.component';
 import { ManageComponent } from './quiz/manage/manage.component';
 import { LoginComponent } from './login/login.component';
+import { AddComponent } from './condidate/add/add.component';
+import { ListComponent } from './condidate/list/list.component';
 
 var routes = [
   
@@ -58,27 +64,40 @@ var routes = [
       path: 'quiz/:id/start',
       component: StartComponent,
       pathMatch: 'full',
+      canActivate: [AuthGuard]
 
   },
   {
     path: 'quiz/:id/result',
     component: ResultComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
   },
   {
     path: 'quiz/new',
     component: NewComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'quiz/:id/manage',
     component: ManageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'users/new',
+    component: AddComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
 
 @NgModule({
   declarations: [
-    AppComponent, NavComponentComponent, StartComponent, HomeComponent, ResultComponent, ResponsesOfQuestionPipe, NewComponent, ManageComponent, LoginComponent
+    AppComponent, NavComponentComponent, StartComponent, HomeComponent,
+    ResultComponent, ResponsesOfQuestionPipe, NewComponent,
+    ManageComponent, LoginComponent, AddComponent,
+    AddComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,
@@ -90,7 +109,9 @@ var routes = [
     ToastrModule.forRoot(), ModalModule.forRoot(),
     TooltipModule.forRoot(),
     DragulaModule, DragDropDirectiveModule, 
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    SidebarModule,
+    AngularFontAwesomeModule
   ],
   providers: [ ApiService, AuthService, AuthGuard ],
   bootstrap: [ AppComponent ]
