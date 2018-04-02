@@ -5,5 +5,12 @@
 
 export const environment = {
   production: false,
-  apiUrl: '/api'
+  firebase: {
+    apiKey: "AIzaSyDM-S8LXU-Ri27RqzGjVa-uElOEqZ_mbsY",
+    authDomain: "quizzes-cbed7.firebaseapp.com",
+    databaseURL: "https://quizzes-cbed7.firebaseio.com",
+    projectId: "quizzes-cbed7",
+    storageBucket: "quizzes-cbed7.appspot.com",
+    messagingSenderId: "809356575960"
+  }
 };

@@ -1,0 +1,35 @@
+
+<table class="table table-striped" style="margin-top: 4%">
+  <thead>
+      <tr>
+            <th scope="col">Firstname</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">address</th>
+            <th scope="col">gender</th>
+            <th scope="col">email</th>
+            <th scope="col">quiz</th>
+        </tr>
+  </thead>      
+  <tbody>
+      <tr *ngFor="let user of users">
+          <td>{{ user.first_name }}</td>
+          <td>{{ user.last_name }}</td>
+          <td>{{ user.address }}</td>
+          <td>{{ user.gender }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.quiz.type }}</td>
+          <td>
+            <button type="button" class="btn btn-success"  tooltip="send invitation" (click)="sendInvitation(user)">
+                <span class="glyphicon glyphicon-envelope"></span>
+            </button>
+            <button type="button" class="btn btn-danger" (click)="deleteCandidate(candidate_id)" tooltip="delete candidate" placement="bottom">
+              <span class="glyphicon glyphicon-remove-circle"></span>
+          </button>
+          </td>
+      </tr>
+  </tbody>
+
+
+</table>
+
+<ng4-loading-spinner> </ng4-loading-spinner>

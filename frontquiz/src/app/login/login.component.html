@@ -36,10 +36,24 @@
           <div class="group">
             <input type="submit" class="button" value="Sign In">
           </div>
+          <div style="padding-left: 40%">
+            <div class="badge" (click)="signInWithFacebook()">
+              <span class="fa fa-facebook" aria-hidden="true"></span> 
+            </div>
+            <div class="badge" (click)="signInWithTwitter()">
+              <span class="fa fa-twitter" aria-hidden="true"></span>
+            </div>
+        
+            <div class="badge" (click)="signInWithGoogle()">
+              <span class="fa fa-google" aria-hidden="true" ></span>
+            </div>
+          </div>
           <div class="hr"></div>
           <div class="foot-lnk">
             <a href="#forgot">Forgot Password?</a>
           </div>
+
+
         </div>
         <div class="sign-up-htm">
           <div class="group">
@@ -67,5 +81,14 @@
           </div>
         </div>
       </form>
+
     </div>
   </div>
+
+  <!-- </button> -->
+  <!-- <button type="button" class="btn btn-block" (click)="signInWithGoogle()"> -->
+    <!-- <i class="fa fa-google" aria-hidden="true"></i> -->
+  <!-- </button> -->
+   <!-- <button type="button" class="btn btn-block" (click)="authFirebase.logout()"> -->
+    <!-- <span class="fa fa-google" aria-hidden="true"></span> -->
+  <!-- </button> -->

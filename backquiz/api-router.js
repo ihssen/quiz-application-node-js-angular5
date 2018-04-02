@@ -3,21 +3,23 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const checkJwt = require('express-jwt');
 var ObjectID = require("mongodb").ObjectID;
+var nodemailer = require('nodemailer');
+
 
 
 function apiRouter(database) {
     const router = express.Router();
 
 
-    router.use(
-        checkJwt({ secret: process.env.JWT_SECRET }).unless({ path: '/api/authenticate'})
-    );
+    // router.use(
+    //     checkJwt({ secret: process.env.JWT_SECRET }).unless({ path: '/api/authenticate'})
+    // );
 
-    router.use((err, req, res, next) => {
-        if( err.name ==='UnauthorizedError') {
-            res.status(401).send({ error: err.message })
-        }
-    })
+    // router.use((err, req, res, next) => {
+    //     if( err.name ==='UnauthorizedError') {
+    //         res.status(401).send({ error: err.message })
+    //     }
+    // })
 
     ////// get all quizzes //////////
     router.get('/quizzes', (req, res) => {
@@ -235,7 +237,7 @@ function apiRouter(database) {
     //// athenticate ////////////
     router.post('/authenticate', (req, res) => {
         const user = req.body;
-
+        console.log(user);
         const usersCollection = database.collection('users');
 
         usersCollection
@@ -257,7 +259,8 @@ function apiRouter(database) {
 
                 return res.json({
                     message: "successfuly authenticate",
-                    token: token
+                    token: token,
+                    user: payload
                 });
             });
 
@@ -271,7 +274,10 @@ function apiRouter(database) {
             gender:  req.body.gender,
             email:    req.body.email,
             password: bcrypt.hashSync(req.body.password, 10),
-            admin: req.body.admin
+            admin: req.body.admin,
+            quiz: req.body.quiz,
+            username: req.body.username,
+            address: req.body.address
             };
         const usersCollection = database.collection('users');
         usersCollection.insertOne(user, (err, r) => {
@@ -285,9 +291,47 @@ function apiRouter(database) {
         });
     });
 
+    //////// get candidate /////////////
+    router.get('/users', (req, res) => {
 
+        const usersCollection = database.collection('users');
+            usersCollection.find({admin: false}).toArray((err, users) => {
+        return res.json(users)
+        });
+    });
 
-    return router;
+    //////// sent invitation /////////////
+    router.post('/sent-email', (req, res) => {
+        console.log(req.body);
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'ihsen.mhadhbi@gmail.com',
+                pass: 'ihsen 97885354'
+            }
+        });
+        
+        var mailOptions = {
+            from: 'ihsen.mhadhbi@gmail.com',
+            to: req.body.email,
+            subject: 'invitaion quiz exam',
+            text: `Bonjour Mr. ${req.body.first_name} you can take the ${req.body.quiz.type} quiz by clicking on this link  
+http://localhost:4200/quiz/${req.body.quiz._id}/start
+    
+email : ${req.body.email}
+password: ${req.body.password}`
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            return res.json(error);
+        } else {
+            return res.json('Email sent: ' + info.response);
+        }
+        });
+    });
+    
+        return router;
 }
 
 module.exports = apiRouter;

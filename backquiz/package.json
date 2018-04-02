@@ -14,10 +14,11 @@
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
     "dotenv": "^5.0.1",
-    "express": "^4.16.2",
+    "express": "^4.16.3",
     "express-jwt": "^5.3.0",
     "jsonwebtoken": "^7.4.1",
     "mongodb": "^2.2.26",
+    "nodemailer": "^4.6.4",
     "objectid": "^3.2.1",
     "underscore": "^1.8.3"
   },

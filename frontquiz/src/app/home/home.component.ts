@@ -84,12 +84,12 @@ export class HomeComponent {
       level: ""
     }
     ngOnInit(){
-        this.ApiService.get('quizzes').subscribe(response => {
-          this.quizzes = response;
-          this.source = new LocalDataSource(this.quizzes);     
+      this.ApiService.get('quizzes').subscribe(response => {
+        this.quizzes = response;
+        this.source = new LocalDataSource(this.quizzes);     
 
       }, error => {
-          console.log("Unable to get messages");
+          console.log("Unable to get quizzes");
       }); 
     }
 

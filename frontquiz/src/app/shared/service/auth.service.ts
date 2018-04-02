@@ -5,11 +5,13 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   storageKey: string = 'contact-manager-jwt'
+  connectedUser: string = 'connected-user'
 
   constructor(private router: Router) { }
 
-  setToken(token: string){
-    localStorage.setItem(this.storageKey, token);
+  setToken(data){
+    localStorage.setItem(this.storageKey, data.token);
+    localStorage.setItem(this.connectedUser, JSON.stringify(data.user));
   }
 
   getToken(){

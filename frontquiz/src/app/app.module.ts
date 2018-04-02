@@ -8,7 +8,7 @@ import { RouterModule } from "@angular/router"
 import { MatInputModule, MatFormFieldModule, MatToolbarModule, MatButtonModule, MatCardModule } from '@angular/material';
 import { MatStepperModule} from '@angular/material/stepper';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCheckboxModule, MatRadioModule } from '@angular/material';
+import { MatCheckboxModule, MatRadioModule, MatSelectModule } from '@angular/material';
 import { ToastrModule } from 'ngx-toastr';
 import swal from 'sweetalert2';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -17,11 +17,10 @@ import { DragulaModule } from 'ng2-dragula';
 import { DragDropDirectiveModule} from "angular4-drag-drop";
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+
 
 import { SidebarModule } from './sidebar/sidebar.module';
-
-
-
 
 
 
@@ -29,6 +28,8 @@ import { SidebarModule } from './sidebar/sidebar.module';
 import { ApiService } from './shared/service/api.service';
 import { AuthService } from './shared/service/auth.service'
 import { AuthGuard } from './shared/guard/auth.guard';
+import { AuthenticationService } from './shared/service/fire-base/authentication.service';
+
 
 import { AppComponent } from './app.component';
 import { NavComponentComponent } from './nav-component/nav-component.component';
@@ -39,8 +40,13 @@ import { ResponsesOfQuestionPipe } from './pipe/responses-of-question.pipe';
 import { NewComponent } from './quiz/new/new.component';
 import { ManageComponent } from './quiz/manage/manage.component';
 import { LoginComponent } from './login/login.component';
-import { AddComponent } from './condidate/add/add.component';
-import { ListComponent } from './condidate/list/list.component';
+import { AddComponent } from './candidate/add/add.component';
+import { ListComponent } from './candidate/list/list.component';
+
+import { environment } from '../environments/environment';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 var routes = [
   
@@ -53,7 +59,7 @@ var routes = [
     path: 'home',
     component: HomeComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
       path: 'login',
@@ -84,8 +90,14 @@ var routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'users/new',
+    path: 'candidate/new',
     component: AddComponent,
+    canActivate: [AuthGuard]
+  }
+  ,
+  {
+    path: 'candidates/list',
+    component: ListComponent,
     canActivate: [AuthGuard]
   }
 ];
@@ -105,15 +117,19 @@ var routes = [
     RouterModule.forRoot(routes),
     MatToolbarModule, MatButtonModule, MatStepperModule, MatCardModule,
     FormsModule, ReactiveFormsModule,
-    MatFormFieldModule, MatInputModule, MatCheckboxModule, MatRadioModule,
+    MatFormFieldModule, MatInputModule, MatCheckboxModule, MatRadioModule, MatSelectModule,
     ToastrModule.forRoot(), ModalModule.forRoot(),
     TooltipModule.forRoot(),
     DragulaModule, DragDropDirectiveModule, 
     Ng2SmartTableModule,
     SidebarModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    Ng4LoadingSpinnerModule.forRoot()
   ],
-  providers: [ ApiService, AuthService, AuthGuard ],
+  providers: [ ApiService, AuthService, AuthGuard, AuthenticationService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
