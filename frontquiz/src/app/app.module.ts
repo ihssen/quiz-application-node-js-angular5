@@ -62,15 +62,15 @@ var routes = [
     // canActivate: [AuthGuard]
   },
   {
-      path: 'login',
-      component: LoginComponent,
-      pathMatch: 'full',
+    path: 'login',
+    component: LoginComponent,
+    pathMatch: 'full',
   },
   {
-      path: 'quiz/:id/start',
-      component: StartComponent,
-      pathMatch: 'full',
-      canActivate: [AuthGuard]
+    path: 'quiz/:id/start',
+    component: StartComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
 
   },
   {
@@ -99,6 +99,11 @@ var routes = [
     path: 'candidates/list',
     component: ListComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'quiz/:id/start/:token/:first_name/:last_name',
+    component: StartComponent,
+   
   }
 ];
 

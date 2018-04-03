@@ -5,7 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ResponsesOfQuestionPipe implements PipeTransform {
 
-  resultResponses;
   transform(value: any, args?: any): any {
     if (!value) return value;
 

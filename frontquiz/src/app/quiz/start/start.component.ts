@@ -30,6 +30,7 @@ export class StartComponent implements OnInit {
    }
 
   ngOnInit() {
+    console.log(this.route.snapshot.params.token);
     this.idQuiz = this.route.snapshot.params.id;
     this.ApiService.get(`questions/quiz/${this.idQuiz}`).subscribe(questions => {
       this.questions = questions;

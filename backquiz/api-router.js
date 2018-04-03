@@ -11,15 +11,15 @@ function apiRouter(database) {
     const router = express.Router();
 
 
-    // router.use(
-    //     checkJwt({ secret: process.env.JWT_SECRET }).unless({ path: '/api/authenticate'})
-    // );
+    router.use(
+        checkJwt({ secret: process.env.JWT_SECRET }).unless({ path: '/api/authenticate'})
+    );
 
-    // router.use((err, req, res, next) => {
-    //     if( err.name ==='UnauthorizedError') {
-    //         res.status(401).send({ error: err.message })
-    //     }
-    // })
+    router.use((err, req, res, next) => {
+        if( err.name ==='UnauthorizedError') {
+            res.status(401).send({ error: err.message })
+        }
+    })
 
     ////// get all quizzes //////////
     router.get('/quizzes', (req, res) => {
@@ -237,33 +237,32 @@ function apiRouter(database) {
     //// athenticate ////////////
     router.post('/authenticate', (req, res) => {
         const user = req.body;
-        console.log(user);
+        
         const usersCollection = database.collection('users');
 
         usersCollection
-            .findOne({ username: user.username }, (err, result) => {
-                if(!result) {
-                    return res.status(401).json({ error: 'user not found'})
-                }
+        .findOne({ username: user.username }, (err, result) => {
+            if(!result) {
+                return res.status(401).json({ error: 'user not found'})
+            }
 
-                if (!bcrypt.compareSync(user.password, result.password)) {
-                    return res.status(401).json({error: 'incorrect password'});
-                }
+            if (!bcrypt.compareSync(user.password, result.password)) {
+                return res.status(401).json({error: 'incorrect password'});
+            }
 
-                const payload = {
-                    username: result.username,
-                    admin: result.admin
-                };
+            const payload = {
+                username: result.username,
+                admin: result.admin
+            };
 
-                const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '4h'});
+            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '4h'});
 
-                return res.json({
-                    message: "successfuly authenticate",
-                    token: token,
-                    user: payload
-                });
+            return res.json({
+                message: "successfuly authenticate",
+                token: token,
+                user: payload
             });
-
+        });
     })
 
     ///// post user ////////////
@@ -280,14 +279,20 @@ function apiRouter(database) {
             address: req.body.address
             };
         const usersCollection = database.collection('users');
+
+        const payload = {
+            username: user.username,
+            admin: user.admin
+        };
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '4h'});
+        user.token = token;
         usersCollection.insertOne(user, (err, r) => {
             if (err) {
                 return res.status(500).json({ error: 'Error inserting new record.' })
-            }
-        
-            const newRecord = r.ops[0];
-        
-            return res.status(201).json(newRecord);
+            }        
+            const newRecord = r.ops[0];       
+            return res.status(201).json({newRecord, "token": token, "user": payload });
         });
     });
 
@@ -316,7 +321,7 @@ function apiRouter(database) {
             to: req.body.email,
             subject: 'invitaion quiz exam',
             text: `Bonjour Mr. ${req.body.first_name} you can take the ${req.body.quiz.type} quiz by clicking on this link  
-http://localhost:4200/quiz/${req.body.quiz._id}/start
+http://localhost:4200/quiz/${req.body.quiz._id}/start/${req.body.token}/${req.body.first_name}/${req.body.last_name}
     
 email : ${req.body.email}
 password: ${req.body.password}`

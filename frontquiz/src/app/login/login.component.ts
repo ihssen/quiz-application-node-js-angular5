@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
     // console.log(this.router.navigateByUrl(this.returnUrl));
     this.api.post('authenticate', payload)
       .subscribe(data => {
-        console.log(data);
         this.auth.setToken(data);
         this.router.navigateByUrl(this.returnUrl);
         // this.router.navigate(['/home']);

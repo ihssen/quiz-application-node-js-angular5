@@ -33,6 +33,7 @@ export class AddComponent implements OnInit {
     const formValues = Object.assign({}, form.value);
 
     formValues.admin = false;
+    formValues.token
     this.api.post('users', formValues)
       .subscribe(data => {
         console.log(form);

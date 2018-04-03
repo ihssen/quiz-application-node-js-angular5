@@ -199,7 +199,7 @@ export class HomeComponent {
 
     onEditConfirm(event) {
       var quiz = { "type": event.newData.type, "level": event.newData.level};
-      this.ApiService.put(`quizzes/${event.data._id}`, quiz).subscribe(responses => { console.log(responses); });
+      this.ApiService.put(`quizzes/${event.data._id}`, quiz).subscribe(responses => { });
       if (window.confirm('Are you sure you want to create?')) {
         event.confirm.resolve(event.newData);
       } else {
