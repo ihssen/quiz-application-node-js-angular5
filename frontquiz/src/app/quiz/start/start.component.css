@@ -1,3 +1,10 @@
 .stepper{
     margin: 5%;
 }
+
+.result-btn{
+    border-radius: 50%;
+    width: 9%;
+    height: 100px;
+    margin-left:50%;
+}

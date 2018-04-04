@@ -50,4 +50,27 @@ export class ListComponent implements OnInit {
     })
     
   }
+
+  deleteCandidate(id) {
+    swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        console.log(this.users);
+        this.apiService.delete(`users/${id}`).subscribe(res => {
+          this.users = this.users.filter((user) => user._id !== id);
+        });
+      }
+      else {
+        // this.toastr.error('Quiz hasn\'t been deleted.');
+        // event.confirm.reject();
+      }
+    })
+  }
 }

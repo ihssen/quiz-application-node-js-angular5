@@ -8,17 +8,12 @@
 
 <mat-card *ngFor="let question of questions; let i = index">
   <mat-card-header >  
-    
   </mat-card-header>
 
   <mat-card-content style="background-color : #e4f7ff">
     <div class="row">
       <div class="col-md-6" style="padding-left: 2%; padding-bottom: 1%;">
          <h3 >{{ question.text }}</h3>
-          <button type="button"  class="btn btn-primary"  tooltip="Add answer" placement="bottom" (click)="openModalAdd(template, question._id)">
-              <span class="glyphicon glyphicon-plus-sign"></span>
-          </button>
-
           <button type="button" class="btn btn-info" (click)="openModalQuestion(templateQuestion, question._id)" tooltip="Edit question" placement="bottom">
               <span class="glyphicon glyphicon-edit"></span>
           </button>
@@ -39,9 +34,12 @@
             <span>{{r.text}}</span>
           </div>
           <div class="col-md-1" tooltip="delete this response" placement="bottom">
-            <span class=" glyphicon glyphicon-remove-circle pull-right" (click)="deleteResponse(r._id)"></span>
+            <span class="glyphicon glyphicon-remove-circle pull-right" (click)="deleteResponse(r._id)"></span>
           </div>
         </li>
+        <button type="button" class="btn btn-primary btn-add-answer" style="margin-top: 3px;margin-left: -15px;" tooltip="Add answer" placement="bottom" (click)="openModalAdd(template, question._id)">
+          <span class="glyphicon glyphicon-plus-sign"></span>
+        </button>
       </ul>
     </div>
   </mat-card-content>

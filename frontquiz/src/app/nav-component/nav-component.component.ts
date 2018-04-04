@@ -30,4 +30,6 @@ export class NavComponentComponent implements OnInit {
     this.auth.logout();
   }
 
+  isAdmin
+
 }

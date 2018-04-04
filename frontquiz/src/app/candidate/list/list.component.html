@@ -8,6 +8,7 @@
             <th scope="col">gender</th>
             <th scope="col">email</th>
             <th scope="col">quiz</th>
+            <th>Actions</th>
         </tr>
   </thead>      
   <tbody>
@@ -22,9 +23,9 @@
             <button type="button" class="btn btn-success"  tooltip="send invitation" (click)="sendInvitation(user)">
                 <span class="glyphicon glyphicon-envelope"></span>
             </button>
-            <button type="button" class="btn btn-danger" (click)="deleteCandidate(candidate_id)" tooltip="delete candidate" placement="bottom">
+            <button type="button" class="btn btn-danger" (click)="deleteCandidate(user._id)" tooltip="delete candidate" placement="bottom">
               <span class="glyphicon glyphicon-remove-circle"></span>
-          </button>
+            </button>
           </td>
       </tr>
   </tbody>

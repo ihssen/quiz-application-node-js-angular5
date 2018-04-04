@@ -11,8 +11,8 @@
     </ul>
     <div>
       <button mat-button matStepperPrevious (click)="getResponsesForQuestion(idQuiz, questions[i-1]._id)" *ngIf="i !== 0">Previous</button>
-      <button mat-button matStepperNext (click)="getResponsesForQuestion(idQuiz,questions[i+1]._id)" *ngIf="i !== questions.length-1">Next</button>
-      <button type="button" class="btn btn-success" [routerLink]="['/quiz/'+idQuiz+'/result']" *ngIf="i == questions.length-1">Result</button>
+      <button mat-button matStepperNext (click)="getResponsesForQuestion(idQuiz,questions[i+1]._id)" *ngIf="i !== questions.length-1">Next</button><br>
+      <button type="button" class="result-btn btn btn-success" [routerLink]="['/quiz/'+idQuiz+'/result']" *ngIf="i == questions.length-1">Result</button>
     </div>
   </mat-step>
 

@@ -11,15 +11,15 @@ function apiRouter(database) {
     const router = express.Router();
 
 
-    router.use(
-        checkJwt({ secret: process.env.JWT_SECRET }).unless({ path: '/api/authenticate'})
-    );
+    // router.use(
+    //     checkJwt({ secret: process.env.JWT_SECRET }).unless({ path: '/api/authenticate'})
+    // );
 
-    router.use((err, req, res, next) => {
-        if( err.name ==='UnauthorizedError') {
-            res.status(401).send({ error: err.message })
-        }
-    })
+    // router.use((err, req, res, next) => {
+    //     if( err.name ==='UnauthorizedError') {
+    //         res.status(401).send({ error: err.message })
+    //     }
+    // })
 
     ////// get all quizzes //////////
     router.get('/quizzes', (req, res) => {
@@ -265,6 +265,16 @@ function apiRouter(database) {
         });
     })
 
+    //////// delete candidat 
+    router.delete('/users/:id', (req, res) => {
+        const usersCollection = database.collection('users');
+
+        usersCollection.remove({_id: ObjectID(req.params.id)}, {safe: true}, function(err, result) {
+            if(err) return res.send({status: false, result: err});
+            return res.json({status: true, data: result.ok, message: "users deleted"});
+        })
+    });
+
     ///// post user ////////////
     router.post('/users', (req, res) => {
         let user = {
@@ -311,8 +321,8 @@ function apiRouter(database) {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: '',
-                pass: ''
+                user: process.env.email,
+                pass: process.env.password
             }
         });
         
@@ -321,7 +331,7 @@ function apiRouter(database) {
             to: req.body.email,
             subject: 'invitaion quiz exam',
             text: `Bonjour Mr. ${req.body.first_name} you can take the ${req.body.quiz.type} quiz by clicking on this link  
-http://localhost:4200/quiz/${req.body.quiz._id}/start/${req.body.token}/${req.body.first_name}/${req.body.last_name}
+http://localhost:4200/quiz/${req.body.quiz._id}/start/${req.body.token}/${req.body.username}/${req.body.admin}
     
 email : ${req.body.email}
 password: ${req.body.password}`

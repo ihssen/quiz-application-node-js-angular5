@@ -15,6 +15,7 @@ export const ROUTES: RouteInfo[] = [
     { path: 'candidate/new', title: 'Add candidate',  icon:'glyphicon glyphicon-user', class: '' },
     { path: 'candidates/list', title: 'List candidates',  icon:'fa fa-group', class: '' },
     { path: 'typography', title: 'All results',  icon:'fa fa-graduation-cap', class: '' }
+]
 
 @Component({
     // moduleId: module.id,

@@ -101,7 +101,7 @@ var routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'quiz/:id/start/:token/:first_name/:last_name',
+    path: 'quiz/:id/start/:token/:username/:admin',
     component: StartComponent,
    
   }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { User } from '../../shared/model/user.model';
 import { ApiService } from '../../shared/service/api.service'
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-add',
@@ -12,7 +14,7 @@ export class AddComponent implements OnInit {
 
   userForm: FormGroup;
   quizzes;
-  constructor(private api:ApiService ) { }
+  constructor(private api:ApiService, private toastr: ToastrService ) { }
 
   ngOnInit() {
     this.getQuizzes();
@@ -36,7 +38,7 @@ export class AddComponent implements OnInit {
     formValues.token
     this.api.post('users', formValues)
       .subscribe(data => {
-        console.log(form);
+        this.toastr.success('success');
         form.reset();
       });
   };
