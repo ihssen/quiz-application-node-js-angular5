@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     .then((res) => { 
       // JWT_SECRET=
       // console.log(res.user._lat+".5zFKzII6a448valFXkoM1cGQyaqVUWWd7Vv6L4M7J01ydE9kzrvpZwHBFh1Pt1X");
-      console.log(res);
+
       this.auth.setToken(res.user._lat);
       this.router.navigate(['home']);        
     })

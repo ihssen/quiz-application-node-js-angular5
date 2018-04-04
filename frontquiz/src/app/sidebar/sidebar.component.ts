@@ -14,11 +14,7 @@ export const ROUTES: RouteInfo[] = [
     { path: 'home', title: 'Home',  icon: 'fa fa-home', class: '' },
     { path: 'candidate/new', title: 'Add candidate',  icon:'glyphicon glyphicon-user', class: '' },
     { path: 'candidates/list', title: 'List candidates',  icon:'fa fa-group', class: '' },
-    { path: 'typography', title: 'All results',  icon:'fa fa-graduation-cap', class: '' },
-    { path: 'icons', title: 'Icons',  icon:'ti-pencil-alt2', class: '' },
-    { path: 'maps', title: 'Maps',  icon:'ti-map', class: '' },
-    { path: 'notifications', title: 'Notifications',  icon:'ti-bell', class: '' },
-];
+    { path: 'typography', title: 'All results',  icon:'fa fa-graduation-cap', class: '' }
 
 @Component({
     // moduleId: module.id,

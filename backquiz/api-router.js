@@ -311,13 +311,13 @@ function apiRouter(database) {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'ihsen.mhadhbi@gmail.com',
-                pass: 'ihsen 97885354'
+                user: '',
+                pass: ''
             }
         });
         
         var mailOptions = {
-            from: 'ihsen.mhadhbi@gmail.com',
+            from: '',
             to: req.body.email,
             subject: 'invitaion quiz exam',
             text: `Bonjour Mr. ${req.body.first_name} you can take the ${req.body.quiz.type} quiz by clicking on this link  
