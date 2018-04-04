@@ -20,3 +20,9 @@ git clone https://github.com/ihssen/quiz-application-node-js-angular5-.git
 ### page login 
 - username : admin
 - password : Pt4bvZSSI4KN4g
+
+3/ add your email & password for sending emails in /backquizz/.env
+
+`email= <your-email>`
+
+`password=<your password email>`
