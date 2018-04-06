@@ -31,8 +31,16 @@ export class StartComponent implements OnInit {
    }
 
   ngOnInit() {
-    var data = { token: this.route.snapshot.params.token, user: {username: this.route.snapshot.params.username, admin: this.route.snapshot.params.admin}};
-    this.auth.setToken(data);
+
+    if(this.route.snapshot.params.token){
+      this.ApiService.post('authenticate-candidate', this.route.snapshot.params).subscribe(data => {
+        console.log(data);
+        this.auth.setToken(data);
+        console.log(data);
+        // this.router.navigateByUrl(this.returnUrl);
+        // this.router.navigate(['/home']);
+      });
+    }
     this.idQuiz = this.route.snapshot.params.id;
     this.ApiService.get(`questions/quiz/${this.idQuiz}`).subscribe(questions => {
       this.questions = questions;
@@ -49,7 +57,6 @@ export class StartComponent implements OnInit {
   }
 
   getResponsesForQuestion(idQuiz,idQuestion){
-    console.log(idQuiz);
     this.ApiService.get(`answers/question/${idQuestion}/quiz/${idQuiz}`).subscribe(responses => {
       this.responses = responses;
       }, error => {

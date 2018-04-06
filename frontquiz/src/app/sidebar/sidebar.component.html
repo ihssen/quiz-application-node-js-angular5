@@ -1,4 +1,4 @@
-<div class="sidebar-wrapper" *ngIf="auth.isLoggedIn()">
+<div class="sidebar-wrapper" *ngIf="auth.isLoggedIn() && this.auth.isAdmin()">
   <div class="logo">
           <div class="logo-img">
               <img src="../../assets/logowct.png" alt="">

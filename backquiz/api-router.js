@@ -11,15 +11,19 @@ function apiRouter(database) {
     const router = express.Router();
 
 
-    // router.use(
-    //     checkJwt({ secret: process.env.JWT_SECRET }).unless({ path: '/api/authenticate'})
-    // );
+    router.use(
+        checkJwt({ secret: process.env.JWT_SECRET }).unless(function(req) {
+            return (
+              req.originalUrl === '/api/authenticate' ||
+              req.originalUrl === '/api/authenticate-candidate'
+            );
+        }));
 
-    // router.use((err, req, res, next) => {
-    //     if( err.name ==='UnauthorizedError') {
-    //         res.status(401).send({ error: err.message })
-    //     }
-    // })
+    router.use((err, req, res, next) => {
+        if( err.name ==='UnauthorizedError') {
+            res.status(401).send({ error: err.message })
+        }
+    })
 
     ////// get all quizzes //////////
     router.get('/quizzes', (req, res) => {
@@ -265,6 +269,33 @@ function apiRouter(database) {
         });
     })
 
+        //// athenticate candidate ////////////
+        router.post('/authenticate-candidate', (req, res) => {
+            const user = req.body;
+            console.log(user);
+            const usersCollection = database.collection('users');
+    
+            usersCollection
+            .findOne({ token: user.token }, (err, result) => {
+                console.log(result);
+                if(!result) {
+                    return res.status(401).json({ error: 'user not found'})
+                }
+    
+                const payload = {
+                    username: result.username,
+                    admin: result.admin
+                };
+    
+                const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '4h'});
+    
+                return res.json({
+                    message: "successfuly authenticate",
+                    token: token,
+                    user: payload
+                });
+            });
+        })
     //////// delete candidat 
     router.delete('/users/:id', (req, res) => {
         const usersCollection = database.collection('users');
@@ -331,10 +362,7 @@ function apiRouter(database) {
             to: req.body.email,
             subject: 'invitaion quiz exam',
             text: `Bonjour Mr. ${req.body.first_name} you can take the ${req.body.quiz.type} quiz by clicking on this link  
-http://localhost:4200/quiz/${req.body.quiz._id}/start/${req.body.token}/${req.body.username}/${req.body.admin}
-    
-email : ${req.body.email}
-password: ${req.body.password}`
+                    http://localhost:4200/quiz/${req.body.quiz._id}/start/${req.body.token}/${req.body.username}/${req.body.admin}`
         };
         
         transporter.sendMail(mailOptions, function(error, info){

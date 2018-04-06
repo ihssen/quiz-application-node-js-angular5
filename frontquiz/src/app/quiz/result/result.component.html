@@ -1,21 +1,21 @@
 <mat-card class="card-result">
   <mat-card-header class="row card-header" >  
-      <div class="col-md-3">
-          <span>Condidat:</span>
-          <span>Ihsen Mhadhbi</span>
-        </div>  
-        <div class="col-md-3">
-          <span>Quiz:</span>
-          <span>Quizz Name</span>
-        </div>
-        <div class="col-md-3">
-            <span>Level:</span>
-            <span>xx</span>
-          </div>
-        <div class="col-md-3">
-          <span>Score:</span>
-          <span>xx/20</span>
-        </div>
+    <div class="col-md-3">
+      <span>Condidat:</span>
+      <span>{{ username }}</span>
+    </div>  
+    <div class="col-md-3">
+      <span>Quiz:</span>
+      <span>Quizz Name</span>
+    </div>
+    <div class="col-md-3">
+      <span>Level:</span>
+      <span>xx</span>
+    </div>
+    <div class="col-md-3">
+      <span>Score:</span>
+      <span>xx/20</span>
+    </div>
   </mat-card-header>
 
   <mat-card-content style="margin-top: 10%">
@@ -24,15 +24,15 @@
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let r of responses | responsesOfQuestion : question._id">
 
-            <span *ngIf=" r.is_right == '1' ;then rightResponse; else falseResponse" ></span>
+          <span *ngIf=" r.is_right == '1' ;then rightResponse; else falseResponse" ></span>
 
-            <ng-template #rightResponse>
-              <span style="font-size: 20px" class="glyphicon glyphicon-ok-sign text-success" ></span>
-            </ng-template>
+          <ng-template #rightResponse>
+            <span style="font-size: 20px" class="glyphicon glyphicon-ok-sign text-success" ></span>
+          </ng-template>
 
-            <ng-template #falseResponse>
-              <span style="font-size: 20px" class="glyphicon glyphicon-remove-sign text-danger" ></span>
-            </ng-template>  
+          <ng-template #falseResponse>
+            <span style="font-size: 20px" class="glyphicon glyphicon-remove-sign text-danger" ></span>
+          </ng-template>  
 
           <input type="checkbox"  [attr.checked]="r.is_checked == true ? 'checked' : null" disabled />{{ r.text }}
 
@@ -42,4 +42,6 @@
       </ul>
     </div>
   </mat-card-content>
+
+  <button (click)="logout()" *ngIf="!auth.isAdmin()">Terminer</button>
 </mat-card>

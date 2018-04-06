@@ -22,6 +22,14 @@ export class AuthService {
     return this.getToken() !== null;
   }
 
+  isAdmin(){
+    if(localStorage.getItem(this.connectedUser)){
+      var user = localStorage.getItem(this.connectedUser);
+      return JSON.parse(user).admin;
+    }
+
+  }
+
   logout(){
     localStorage.removeItem(this.storageKey);
     this.router.navigate(['/login']);

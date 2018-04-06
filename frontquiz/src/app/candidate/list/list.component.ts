@@ -39,13 +39,14 @@ export class ListComponent implements OnInit {
       if (result.value) {
         this.spinnerService.show();
         this.apiService.post('sent-email',user).subscribe(response => {
-          console.log('email was sent');
+
+          console.log(response);
           this.spinnerService.hide();
           }, error => {
             console.log('Unable to sent email');
           });
         }
-        this.spinnerService.hide();
+
       
     })
     

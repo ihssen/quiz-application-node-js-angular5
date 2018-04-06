@@ -8,7 +8,7 @@ import { AuthService } from '../shared/service/auth.service';
   template: `
     <mat-toolbar color="primary" *ngIf="auth.isLoggedIn()">
       <button mat-button routerLink="/login" (click)="logout()">Logout</button>
-      <button mat-button routerLink="/home">Home</button>
+      <button mat-button routerLink="/home" *ngIf="auth.isLoggedIn() && this.auth.isAdmin()">Home</button>
       <span style="flex: 1 1 auto;"></span>
       <span class="badge" style="margin-right:10px;">
         <i class="glyphicon glyphicon-user fa-2x"></i>
@@ -30,6 +30,5 @@ export class NavComponentComponent implements OnInit {
     this.auth.logout();
   }
 
-  isAdmin
 
 }
